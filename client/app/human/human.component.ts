@@ -51,6 +51,7 @@ export class HumanComponent {
     this.HumanService.addHuman(human)
         .subscribe(data => {
           this.humans.push(data);
+          this.form.reset();
           this.name = '';
           this.age = undefined;
         })
