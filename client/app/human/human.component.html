@@ -3,16 +3,47 @@
     <div class="content">
       <hr >
       
-      <form novalidate [formGroup]="form"> 
+      <form [formGroup]="form" novalidate> 
         <label class="label">Name</label>
-        <p class="control">
-          <input class="input" type="text" formControlName="name" />
+        <p class="control has-icon has-icon-right">
+          <input 
+            class="input"
+            [ngClass]="{
+              'is-danger': !form.controls['name'].valid && form.controls['name'].touched,
+              'is-success': form.controls['name'].valid
+            }"
+            type="text"
+            formControlName="name"
+          />
+          <span *ngIf="form.controls['name'].valid" class="icon is-small">
+            <i class="fa fa-check"></i>
+          </span>
+          <span *ngIf="formErrors.name" class="help is-danger">
+            {{ formErrors.name }}
+          </span>
         </p>
         <label class="label">Age</label>
-        <p class="control">
-          <input class="input" type="number" formControlName="age" />
+        <p class="control has-icon has-icon-right">
+          <input 
+            class="input"
+            [ngClass]="{
+              'is-danger': !form.controls['age'].valid && form.controls['age'].touched,
+              'is-success': form.controls['age'].valid
+            }"
+            type="text"
+            type="number"
+            formControlName="age"
+          />
+          <span *ngIf="form.controls['age'].valid" class="icon is-small">
+            <i class="fa fa-check"></i>
+          </span>
+          <span *ngIf="formErrors.age" class="help is-danger">
+            {{ formErrors.age }}
+          </span>
         </p>
         <button
+          type="submit"
+          [disabled]="!form.valid"
           class="button is-primary" 
           [class.is-disabled]="!form.valid" 
           (click)="addHuman()">
@@ -21,7 +52,7 @@
       </form>
       <pre>
        Form: {{ form.value | json}}
-       Valid: {{form.status }}
+       Valid: {{form.valid }}
       </pre>
       
     </div>

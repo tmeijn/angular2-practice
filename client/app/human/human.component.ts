@@ -30,7 +30,8 @@ export class HumanComponent {
       name: ['', [
         Validators.required,
         Validators.minLength(2),
-        Validators.maxLength(8)
+        Validators.maxLength(24),
+        Validators.pattern(/^[a-zA-Z\s]+$/)
         ]
       ],
       age: ['', [
@@ -39,7 +40,45 @@ export class HumanComponent {
         ]
       ]
     });
+
+    //Subscribe to the values of the form
+    this.form.valueChanges
+      .subscribe(data => this.onValueChanged(data));
   }
+
+  onValueChanged(data?: any) {
+    if (!this.form) { return; }
+    const form = this.form;
+    for (const field in this.formErrors) {
+      // clear previous error message (if any)
+      this.formErrors[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
+    }
+  }
+
+  //Declare form entries and corresponding errors here
+  formErrors = {
+    'name': '',
+    'age': ''
+  };
+  validationMessages = {
+    'name': {
+      'required':      'Name is required.',
+      'minlength':     'Name must be at least 2 characters long.',
+      'maxlength':     'Name cannot be more than 24 characters long.',
+    },
+    'age': {
+      'required': 'Age is required.',
+      'pattern': 'Age must be between 5 and 99.'
+    }
+  };
+
 
   addHuman() {
     let human = {
@@ -50,6 +89,7 @@ export class HumanComponent {
     this.HumanService.addHuman(human)
         .subscribe(data => {
           this.humans.push(data);
+          this.form.reset();
           this.name = '';
           this.age = undefined;
         })
