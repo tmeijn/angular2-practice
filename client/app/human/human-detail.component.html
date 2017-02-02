@@ -1,0 +1,11 @@
+<div *ngIf="human">
+    <h2>{{human.name}} details!</h2>
+    <div><label>MongoDB id: </label>{{human._id}}</div>
+    <div>
+      <label>name: </label>
+      <input [(ngModel)]="human.name" placeholder="name"/>
+      <label>age: </label>
+      <input [(ngModel)]="human.age" placeholder="age"/>
+      <a class="button is-warning" (click)="updateHuman(human._id, human)">Update this human</a>
+    </div>
+  </div>

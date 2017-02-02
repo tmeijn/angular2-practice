@@ -1,0 +1,42 @@
+<div class="columns is-centered">
+  <div class="column is-4">
+    <div class="content">
+      <hr >
+      
+      <form novalidate [formGroup]="form"> 
+        <label class="label">Name</label>
+        <p class="control">
+          <input class="input" type="text" formControlName="name" />
+        </p>
+        <label class="label">Age</label>
+        <p class="control">
+          <input class="input" type="number" formControlName="age" />
+        </p>
+        <button
+          class="button is-primary" 
+          [class.is-disabled]="!form.valid" 
+          (click)="addHuman()">
+          Add a human
+        </button>
+      </form>
+      <pre>
+       Form: {{ form.value | json}}
+       Valid: {{form.status }}
+      </pre>
+      
+    </div>
+  </div>
+</div>
+<hr>
+<div class="columns content is-centered">
+  <ul>
+    <li *ngFor="let human of humans" class="block">
+      <a [class.is-disabled]="human === selectedHuman" (click)="onSelect(human)">{{ human.name }}, age: {{ human.age }}</a> 
+      <a style="margin-left: 30px" class="button is-danger is-pulled-right" (click)="removeHuman(human._id, human)">Remove human</a>
+    </li>
+  </ul>
+</div>
+<hr>
+<div class="columns content is-centered">
+  <human-detail [human]="selectedHuman"></human-detail>
+</div>
