@@ -18,6 +18,9 @@
           <span *ngIf="form.controls['name'].valid" class="icon is-small">
             <i class="fa fa-check"></i>
           </span>
+          <span *ngIf="formErrors.name" class="help is-danger">
+            {{ formErrors.name }}
+          </span>
         </p>
         <label class="label">Age</label>
         <p class="control has-icon has-icon-right">
@@ -34,7 +37,9 @@
           <span *ngIf="form.controls['age'].valid" class="icon is-small">
             <i class="fa fa-check"></i>
           </span>
-
+          <span *ngIf="formErrors.age" class="help is-danger">
+            {{ formErrors.age }}
+          </span>
         </p>
         <button
           type="submit"
